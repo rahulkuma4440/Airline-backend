@@ -2,6 +2,7 @@ const express=require("express");
 const router=express.Router();
 const {login, register}=require("../controller/authController.js"); 
 
+// console.log("Auth routes loaded");
 router.post("/login", login);
 router.post("/register", register);
 

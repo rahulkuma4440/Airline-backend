@@ -1,4 +1,4 @@
-const Flight = require("../model/Flight.js");
+const Flight = require("./Flight.js");
 
 exports.createFlight=async(req, res) => {
     try {
@@ -36,7 +36,7 @@ exports.createFlight=async(req, res) => {
     }
 }
 
-exports.getFlights=async(req, res) => {
+exports.getFlights = async(req, res) => {
     try {
         const flights=await Flight.find();
         res.status(200).json({
@@ -45,5 +45,26 @@ exports.getFlights=async(req, res) => {
         });
     } catch (error) {
         res.status(500).json({ msg: error.message });
+    }
+}
+
+exports.reserveSeats = async(req, res) => {
+    try {
+
+        const {flightId, seats} = req.body;
+
+        const flight=await Flight.findOneAndUpdate(
+            { _id: flightId, seatsAvailable: {$gte: seats}},
+            { $inc: {seatsAvailable: -seats} },
+            {new: true}
+        );
+        
+        if(!flight) {
+            res.status(400).json({ msg: "Not enough seats available" });
+        }
+
+        res.json(flight);
+    } catch(err) {
+        res.status(500).json({ msg: err.message });
     }
 }

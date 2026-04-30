@@ -1,5 +1,5 @@
 const bcrypt=require("bcryptjs");
-const User=require("../model/User.js");
+const User=require("./User.js");
 const jwt=require("jsonwebtoken");
 
 exports.login=async(req, res) => {

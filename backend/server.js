@@ -15,8 +15,9 @@ app.use(cors());
 // app.use(express.json());      //used for req.body to not store undefined
 
 //routes
-app.use("/api/auth", require("./routes/authRoutes.js"));
-app.use("/api/flight", require("./routes/flightRoutes.js"));
+app.use("/api/auth", require("./AuthService/authRoutes.js"));
+app.use("/api/flight", require("./FlightService/flightRoutes.js"));
+app.use("/api/booking", require("./BookingService/bookingRoutes.js"));
 app.post("/test", (req, res) => {
     console.log(req.body);
     res.send("working");
